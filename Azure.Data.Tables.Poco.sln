@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.Tables.Poco", "packages\Azure.Data.Tables.Poco\Azure.Data.Tables.Poco.csproj", "{1DA55552-6E66-4B8F-B9A3-610A169AE93C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.Tables.Poco.Attributes", "packages\Azure.Data.Tables.Poco.Attributes\Azure.Data.Tables.Poco.Attributes.csproj", "{D65D878C-A4D1-4AD0-AED3-20BCA72DABAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{52E08583-1C73-4496-8189-7E47CA761F52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.Tables.Poco.Tests", "tests\Azure.Data.Tables.Poco.Tests\Azure.Data.Tables.Poco.Tests.csproj", "{32AF4198-EDBD-4CFB-9ED9-2D5F05A63CD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Data.Tables.Poco.Abstractions", "packages\Azure.Data.Tables.Poco.Abstractions\Azure.Data.Tables.Poco.Abstractions.csproj", "{7CAC8D05-6462-437C-9215-B02A53CEE6F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DA55552-6E66-4B8F-B9A3-610A169AE93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA55552-6E66-4B8F-B9A3-610A169AE93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA55552-6E66-4B8F-B9A3-610A169AE93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA55552-6E66-4B8F-B9A3-610A169AE93C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D65D878C-A4D1-4AD0-AED3-20BCA72DABAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D65D878C-A4D1-4AD0-AED3-20BCA72DABAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D65D878C-A4D1-4AD0-AED3-20BCA72DABAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D65D878C-A4D1-4AD0-AED3-20BCA72DABAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32AF4198-EDBD-4CFB-9ED9-2D5F05A63CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32AF4198-EDBD-4CFB-9ED9-2D5F05A63CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32AF4198-EDBD-4CFB-9ED9-2D5F05A63CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32AF4198-EDBD-4CFB-9ED9-2D5F05A63CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CAC8D05-6462-437C-9215-B02A53CEE6F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CAC8D05-6462-437C-9215-B02A53CEE6F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CAC8D05-6462-437C-9215-B02A53CEE6F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CAC8D05-6462-437C-9215-B02A53CEE6F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32AF4198-EDBD-4CFB-9ED9-2D5F05A63CD5} = {52E08583-1C73-4496-8189-7E47CA761F52}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>Azure.Data.Tables.Poco</PackageId>
+        <Authors>david@vollmers.org</Authors>
+        <Copyright>David Vollmers</Copyright>
+        <Description>Decorate your POCOs with attributes for easy usage with Azure.Data.Tables</Description>
+        <PackageProjectUrl>https://github.com/DavidVollmers/AzureDataTablesPoco</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/DavidVollmers/AzureDataTablesPoco.git</RepositoryUrl>
+        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+        <LangVersion>11</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Azure.Data.Tables.Poco.Attributes\Azure.Data.Tables.Poco.Attributes.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Data.Tables" Version="12.8.0" />
+    </ItemGroup>
+
+</Project>
