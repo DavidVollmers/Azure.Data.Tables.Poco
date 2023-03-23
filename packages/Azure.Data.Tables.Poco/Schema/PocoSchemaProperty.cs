@@ -81,13 +81,21 @@ internal class PocoSchemaProperty
 
     public static PocoSchemaProperty CreateFromPropertyInfo(PropertyInfo propertyInfo)
     {
-        var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null;
-
         var isPartitionKey = propertyInfo.GetCustomAttribute<PartitionKeyAttribute>(true) != null;
         var isRowKey = propertyInfo.GetCustomAttribute<RowKeyAttribute>(true) != null;
 
-        if (isPartitionKey || isRowKey) shouldBeIgnored = true;
+        var storableAttribute = propertyInfo.GetCustomAttribute<StorableAttribute>();
+        var name = storableAttribute?.Name ?? propertyInfo.Name;
+        if (name == nameof(ITableEntity.PartitionKey) && !isPartitionKey ||
+            name == nameof(ITableEntity.RowKey) && !isRowKey)
+        {
+            throw new InvalidOperationException(
+                $"Property '{propertyInfo.Name}' of type '{propertyInfo.DeclaringType!.FullName}' is named as partition or row key but is not specified as such. Please use the PartitionKeyAttribute or RowKeyAttribute. ");
+        }
 
+        if (isPartitionKey) name = nameof(ITableEntity.PartitionKey);
+        else if (isRowKey) name = nameof(ITableEntity.RowKey);
+        
         var storeAsAttribute = propertyInfo.GetCustomAttribute<StoreAsAttribute>(true);
         if (storeAsAttribute != null && !storeAsAttribute.Converter.CanConvert(propertyInfo))
         {
@@ -101,14 +109,8 @@ internal class PocoSchemaProperty
             throw new InvalidOperationException(
                 $"Property '{propertyInfo.Name}' of type '{propertyInfo.DeclaringType!.FullName}' cannot be used as a partition or row key. Either define the property as type '{typeof(string).FullName}' or use a key compliant StoreAsAttribute.");
         }
-
-        var storableAttribute = propertyInfo.GetCustomAttribute<StorableAttribute>();
-        var name = storableAttribute?.Name ?? propertyInfo.Name;
-        if (name is nameof(ITableEntity.PartitionKey) or nameof(ITableEntity.RowKey))
-        {
-            throw new InvalidOperationException(
-                $"Property name '{propertyInfo.Name}' of type '{propertyInfo.DeclaringType!.FullName}' is reserved for system properties.");
-        }
+        
+        var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null || isPartitionKey || isRowKey;
 
         return new PocoSchemaProperty(name, propertyInfo, storeAsAttribute, isPartitionKey, isRowKey, shouldBeIgnored);
     }

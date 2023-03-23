@@ -39,7 +39,7 @@ internal class TableEntityConverter<T> where T : class
 
         foreach (var property in _schema.SetProperties)
         {
-            if (property.ShouldBeIgnored) continue;
+            if (property is { ShouldBeIgnored: true, IsPartitionKey: false, IsRowKey: false }) continue;
 
             if (property.Name == nameof(ITableEntity.Timestamp))
             {
