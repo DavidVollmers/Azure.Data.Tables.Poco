@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <PackageId>Azure.Data.Tables.Poco.Abstractions</PackageId>
+        <PackageId>DavidVollmers.Azure.Data.Tables.Poco.Abstractions</PackageId>
         <Authors>david@vollmers.org</Authors>
         <Copyright>David Vollmers</Copyright>
         <Description>Abstractions for Azure.Data.Tables.Poco</Description>

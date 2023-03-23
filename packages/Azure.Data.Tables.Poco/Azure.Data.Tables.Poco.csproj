@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <PackageId>Azure.Data.Tables.Poco</PackageId>
+        <PackageId>DavidVollmers.Azure.Data.Tables.Poco</PackageId>
         <Authors>david@vollmers.org</Authors>
         <Copyright>David Vollmers</Copyright>
         <Description>Decorate your POCOs with attributes for easy usage with Azure.Data.Tables</Description>
