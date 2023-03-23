@@ -5,11 +5,11 @@
         <Authors>david@vollmers.org</Authors>
         <Copyright>David Vollmers</Copyright>
         <Description>Attributes for Azure.Data.Tables.Poco</Description>
-        <PackageProjectUrl>https://github.com/DavidVollmers/AzureDataTablesPoco</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/DavidVollmers/AzureDataTablesPoco.git</RepositoryUrl>
+        <RepositoryUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco.git</RepositoryUrl>
         <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
