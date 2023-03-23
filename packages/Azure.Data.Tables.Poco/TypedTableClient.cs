@@ -100,7 +100,7 @@ public class TypedTableClient<T> where T : class
     {
         var asyncPageable = _tableClient.QueryAsync<TableEntity>(filter, maxPerPage, select, cancellationToken);
 
-        await foreach (var entity in asyncPageable)
+        await foreach (var entity in asyncPageable.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             var poco = _tableEntityConverter.ConvertFromEntity(entity);
 
