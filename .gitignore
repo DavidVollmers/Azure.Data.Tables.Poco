@@ -485,4 +485,5 @@ $RECYCLE.BIN/
 
 # Don't ignore project packages
 !packages/Azure.Data.Tables.Poco
+!packages/Azure.Data.Tables.Poco.Abstractions
 !packages/Azure.Data.Tables.Poco.Attributes
