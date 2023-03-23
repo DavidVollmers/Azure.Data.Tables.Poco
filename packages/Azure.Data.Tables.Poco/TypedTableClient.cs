@@ -122,7 +122,7 @@ public class TypedTableClient<T> where T : class
     {
         if (poco == null) throw new ArgumentNullException(nameof(poco));
 
-        var entity = _tableEntityConverter.ConvertToEntity(poco, true);
+        var entity = _tableEntityConverter.ConvertToEntity(poco);
 
         return await _tableClient.UpdateEntityAsync(entity, ifMatch, mode, cancellationToken).ConfigureAwait(false);
     }
@@ -132,7 +132,7 @@ public class TypedTableClient<T> where T : class
     {
         if (poco == null) throw new ArgumentNullException(nameof(poco));
 
-        var entity = _tableEntityConverter.ConvertToEntity(poco, true);
+        var entity = _tableEntityConverter.ConvertToEntity(poco);
 
         return await _tableClient.UpsertEntityAsync(entity, mode, cancellationToken).ConfigureAwait(false);
     }
