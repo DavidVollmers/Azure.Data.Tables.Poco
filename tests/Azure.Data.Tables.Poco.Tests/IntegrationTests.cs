@@ -23,16 +23,14 @@ public class IntegrationTests
 
         await tableClient.CreateTableIfNotExistsAsync();
 
-        var getPoco = await tableClient.GetIfExistsAsync(accountPoco.Id.ToString(), accountPoco.Id.ToString())
-            ;
+        var getPoco = await tableClient.GetIfExistsAsync(accountPoco.Id.ToString(), accountPoco.Id.ToString());
         Assert.Null(getPoco);
 
         var response = await tableClient.AddAsync(accountPoco);
         Assert.NotNull(response);
         Assert.Equal(204, response.Status);
 
-        getPoco = await tableClient.GetIfExistsAsync(accountPoco.Id.ToString(), accountPoco.Id.ToString())
-            ;
+        getPoco = await tableClient.GetIfExistsAsync(accountPoco.Id.ToString(), accountPoco.Id.ToString());
         Assert.NotNull(getPoco);
         Assert.Equal(accountPoco.Id, getPoco!.Id);
         Assert.Equal(accountPoco.State, getPoco.State);
@@ -47,7 +45,7 @@ public class IntegrationTests
     }
 
     [Fact]
-    public async Task Test_Query()
+    public async Task Test_QueryPocos()
     {
         var accountPocos = new List<AccountPoco>();
         for (var i = 0; i <= 10; i++)
@@ -68,7 +66,7 @@ public class IntegrationTests
 
         // make sure no data exists
         await tableClient.DeleteTableAsync();
-        
+
         await tableClient.CreateTableIfNotExistsAsync();
 
         foreach (var accountPoco in accountPocos)
@@ -113,7 +111,43 @@ public class IntegrationTests
                 Assert.NotNull(result);
                 Assert.Equal(accountPocos[5].MailAddress, result.MailAddress);
             });
-            
+
+        await tableClient.DeleteTableAsync();
+    }
+
+    [Fact]
+    public async Task Test_TypeInfoPoco()
+    {
+        var typeInfoPoco = new TypeInfoPoco
+        {
+            Instance = Guid.NewGuid().ToString(),
+            Type = typeof(string)
+        };
+
+        var client = new TableServiceClient("UseDevelopmentStorage=true");
+
+        var tableClient = client.GetTableClient<TypeInfoPoco>();
+        Assert.Equal(nameof(TypeInfoPoco), tableClient.Name);
+
+        // make sure no data exists
+        await tableClient.DeleteTableAsync();
+
+        await tableClient.CreateTableIfNotExistsAsync();
+
+        var response = await tableClient.AddAsync(typeInfoPoco);
+        Assert.NotNull(response);
+        Assert.Equal(204, response.Status);
+
+        var filter = $"{nameof(TypeInfoPoco.Type)} eq '{typeof(string).AssemblyQualifiedName}'";
+        var results = await tableClient.QueryAsync(filter).ToArrayAsync();
+        Assert.Collection(results,
+            result =>
+            {
+                Assert.NotNull(result);
+                Assert.Equal(typeInfoPoco.Instance.ToString(), result!.Instance!.ToString());
+                Assert.Equal(typeInfoPoco.Type, result.Type);
+            });
+
         await tableClient.DeleteTableAsync();
     }
 }

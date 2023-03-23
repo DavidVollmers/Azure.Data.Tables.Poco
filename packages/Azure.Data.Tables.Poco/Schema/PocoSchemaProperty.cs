@@ -92,7 +92,7 @@ internal class PocoSchemaProperty
         }
 
         if ((isPartitionKey || isRowKey) &&
-            storeAsAttribute?.Converter.IsKeyCompliant == false && propertyInfo.PropertyType != typeof(string))
+            storeAsAttribute?.Converter.IsKeyCompliant != true && propertyInfo.PropertyType != typeof(string))
         {
             throw new InvalidOperationException(
                 $"Property '{propertyInfo.Name}' of type '{propertyInfo.DeclaringType!.FullName}' cannot be used as a partition or row key. Either define the property as type '{typeof(string).FullName}' or use a key compliant StoreAsAttribute.");
