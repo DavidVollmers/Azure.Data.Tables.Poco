@@ -5,7 +5,7 @@ namespace Azure.Data.Tables.Poco.Converters;
 
 internal class StorablePropertyTypeInfoConverter : IStorablePropertyConverter
 {
-    public bool IsKeyCompliant => true;
+    public bool IsKeyCompliant => false;
 
     public bool CanConvert(PropertyInfo propertyInfo)
     {

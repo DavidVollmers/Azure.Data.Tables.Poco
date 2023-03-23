@@ -81,8 +81,12 @@ internal class PocoSchemaProperty
 
     public static PocoSchemaProperty CreateFromPropertyInfo(PropertyInfo propertyInfo)
     {
+        var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null;
+
         var isPartitionKey = propertyInfo.GetCustomAttribute<PartitionKeyAttribute>(true) != null;
         var isRowKey = propertyInfo.GetCustomAttribute<RowKeyAttribute>(true) != null;
+
+        if (isPartitionKey || isRowKey) shouldBeIgnored = true;
 
         var storeAsAttribute = propertyInfo.GetCustomAttribute<StoreAsAttribute>(true);
         if (storeAsAttribute != null && !storeAsAttribute.Converter.CanConvert(propertyInfo))
@@ -97,8 +101,6 @@ internal class PocoSchemaProperty
             throw new InvalidOperationException(
                 $"Property '{propertyInfo.Name}' of type '{propertyInfo.DeclaringType!.FullName}' cannot be used as a partition or row key. Either define the property as type '{typeof(string).FullName}' or use a key compliant StoreAsAttribute.");
         }
-
-        var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null;
 
         var storableAttribute = propertyInfo.GetCustomAttribute<StorableAttribute>();
         var name = storableAttribute?.Name ?? propertyInfo.Name;
