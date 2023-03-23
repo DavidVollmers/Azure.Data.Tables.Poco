@@ -22,7 +22,7 @@ public class AccountPoco
 
     public string MailAddress { get; set; } = null!;
 
-    public DateTimeOffset CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
     [Storable("Timestamp")] public DateTimeOffset UpdatedAt { get; set; }
 
