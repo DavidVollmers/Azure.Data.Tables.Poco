@@ -20,4 +20,9 @@
       <ProjectReference Include="..\Azure.Data.Tables.Poco.Abstractions\Azure.Data.Tables.Poco.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\" />
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
 </Project>
