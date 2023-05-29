@@ -122,6 +122,8 @@ public class TypedTableClient<T> where T : class
     {
         if (poco == null) throw new ArgumentNullException(nameof(poco));
 
+        if (ifMatch == default) ifMatch = new ETag("*");
+
         var entity = _tableEntityConverter.ConvertToEntity(poco);
 
         return await _tableClient.UpdateEntityAsync(entity, ifMatch, mode, cancellationToken).ConfigureAwait(false);
