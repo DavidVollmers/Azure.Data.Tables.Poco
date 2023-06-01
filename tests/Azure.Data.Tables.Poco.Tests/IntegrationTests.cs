@@ -13,7 +13,8 @@ public class IntegrationTests
             Id = Guid.NewGuid(),
             State = AccountState.Active,
             PasswordHash = Guid.NewGuid().ToString(),
-            MailAddress = "david@vollmers.org"
+            MailAddress = "david@vollmers.org",
+            AvatarUrl = new Uri("https://ui-avatars.com/api/?name=David+Vollmers")
         };
 
         var client = new TableServiceClient("UseDevelopmentStorage=true");
@@ -40,6 +41,7 @@ public class IntegrationTests
         Assert.Null(getPoco.LastLoginAt);
         Assert.True(getPoco.UpdatedAt > getPoco.CreatedAt);
         Assert.True(getPoco.IsInternal);
+        Assert.Equal(accountPoco.AvatarUrl.ToString(), getPoco.AvatarUrl.ToString());
 
         await tableClient.DeleteTableAsync();
     }

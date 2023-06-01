@@ -29,4 +29,6 @@ public class AccountPoco
     public DateTimeOffset? LastLoginAt { get; set; }
 
     public bool IsInternal => MailAddress.EndsWith("@vollmers.org");
+    
+    [StoreAsString] public Uri AvatarUrl { get; set; }
 }

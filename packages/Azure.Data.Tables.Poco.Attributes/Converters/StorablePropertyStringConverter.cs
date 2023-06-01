@@ -13,7 +13,8 @@ internal class StorablePropertyStringConverter : IStorablePropertyConverter
     public bool CanConvert(PropertyInfo propertyInfo)
     {
         return propertyInfo.PropertyType.IsAssignableTo(typeof(IConvertible)) ||
-               propertyInfo.PropertyType == typeof(Guid);
+               propertyInfo.PropertyType == typeof(Guid) ||
+               propertyInfo.PropertyType == typeof(Uri);
     }
 
     public object? ConvertTo(PropertyInfo propertyInfo, object instance)
@@ -54,6 +55,7 @@ internal class StorablePropertyStringConverter : IStorablePropertyConverter
         var stringValue = (string)value;
         
         if (propertyInfo.PropertyType == typeof(Guid)) return Guid.Parse(stringValue);
+        if (propertyInfo.PropertyType == typeof(Uri)) return new Uri(stringValue, UriKind.RelativeOrAbsolute);
 
         return stringValue;
     }
