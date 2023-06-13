@@ -95,17 +95,12 @@ public class TypedTableClient<T> where T : class
         return !response.HasValue ? null : _tableEntityConverter.ConvertFromEntity(response.Value);
     }
 
-    public async IAsyncEnumerable<T> QueryAsync(string? filter = null, int? maxPerPage = null,
-        IEnumerable<string>? select = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public AsyncPageable<T> QueryAsync(string? filter = null, int? maxPerPage = null,
+        IEnumerable<string>? select = null, CancellationToken cancellationToken = default)
     {
         var asyncPageable = _tableClient.QueryAsync<TableEntity>(filter, maxPerPage, select, cancellationToken);
 
-        await foreach (var entity in asyncPageable.ConfigureAwait(false))
-        {
-            var poco = _tableEntityConverter.ConvertFromEntity(entity);
-
-            yield return poco;
-        }
+        return new TypedAsyncPageable<T>(asyncPageable, _tableEntityConverter);
     }
 
     public TypedTableClient<T> OverrideTableName(string name)
