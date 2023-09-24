@@ -152,4 +152,45 @@ public class IntegrationTests
 
         await tableClient.DeleteTableAsync();
     }
+
+    [Fact]
+    public async Task Test_JsonPoco()
+    {
+        var json = new JsonPoco.Json
+        {
+            StringProperty = "Lorem Ipsum dolor sit amet."
+        };
+        var jsonPoco = new JsonPoco
+        {
+            Key = Guid.NewGuid().ToString(),
+            Json1 = json, 
+            Json2 = json
+        };
+        
+        var client = new TableServiceClient("UseDevelopmentStorage=true");
+        
+        var tableClient = client.GetTableClient<JsonPoco>();
+        Assert.Equal(nameof(JsonPoco), tableClient.Name);
+        
+        // make sure no data exists
+        await tableClient.DeleteTableAsync();
+        
+        await tableClient.CreateTableIfNotExistsAsync();
+        
+        var response = await tableClient.AddAsync(jsonPoco);
+        Assert.NotNull(response);
+        Assert.Equal(204, response.Status);
+        
+        var filter = $"PartitionKey eq '{jsonPoco.Key}'";
+        var results = await tableClient.QueryAsync(filter).ToArrayAsync();
+        Assert.Collection(results,
+            result =>
+            {
+                Assert.NotNull(result);
+                Assert.Equal(json.StringProperty, result!.Json1.StringProperty);
+                Assert.Equal(nameof(JsonPoco.CustomJsonConverter), result.Json2.StringProperty);
+            });
+
+        await tableClient.DeleteTableAsync();
+    }
 }

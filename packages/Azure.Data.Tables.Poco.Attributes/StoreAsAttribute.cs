@@ -3,12 +3,12 @@
 namespace Azure.Data.Tables.Poco;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class StoreAsAttribute : Attribute
+public abstract class StoreAsAttribute : Attribute
 {
     public IStorablePropertyConverter Converter { get; }
 
-    public StoreAsAttribute(IStorablePropertyConverter converter)
+    protected StoreAsAttribute(IStorablePropertyConverter converter)
     {
-        Converter = converter;
+        Converter = converter ?? throw new ArgumentNullException(nameof(converter));
     }
 }

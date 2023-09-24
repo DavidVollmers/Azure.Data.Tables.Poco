@@ -1,12 +1,13 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using Azure.Data.Tables.Poco.Abstractions;
 
 namespace Azure.Data.Tables.Poco.Converters;
 
 internal class StorablePropertyStringConverter : IStorablePropertyConverter
 {
-    public IFormatProvider? FormatProvider { get; set; }
-
+    private static readonly IFormatProvider FormatProvider = CultureInfo.InvariantCulture;
+    
     public bool IsKeyCompliant => true;
 
     //TODO support more types
