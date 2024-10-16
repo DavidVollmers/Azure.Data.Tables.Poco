@@ -30,5 +30,5 @@ public class AccountPoco
 
     public bool IsInternal => MailAddress.EndsWith("@vollmers.org");
     
-    [StoreAsString] public Uri AvatarUrl { get; set; }
+    [StoreAsString] public Uri? AvatarUrl { get; set; }
 }
