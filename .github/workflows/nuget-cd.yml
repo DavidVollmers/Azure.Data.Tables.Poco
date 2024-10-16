@@ -45,4 +45,3 @@ jobs:
           path: ./nuget
       - run: |
           dotnet nuget push ./nuget/**.nupkg --source nuget.org --api-key ${{ secrets.NUGET_API_KEY }}
-          dotnet nuget push ./nuget/**.nupkg --source github --api-key ${{ secrets.PAT_GITHUB }}
