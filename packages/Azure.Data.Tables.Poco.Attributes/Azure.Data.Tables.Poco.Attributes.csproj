@@ -1,28 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <PackageId>DavidVollmers.Azure.Data.Tables.Poco.Attributes</PackageId>
-        <Authors>david@vollmers.org</Authors>
-        <Copyright>David Vollmers</Copyright>
-        <Description>Attributes for Azure.Data.Tables.Poco</Description>
-        <PackageProjectUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco</PackageProjectUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco.git</RepositoryUrl>
-        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Azure.Data.Tables.Poco</RootNamespace>
-    </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>DavidVollmers.Azure.Data.Tables.Poco.Attributes</PackageId>
+    <Authors>david@vollmers.org</Authors>
+    <Copyright>David Vollmers</Copyright>
+    <Description>Attributes for Azure.Data.Tables.Poco</Description>
+    <PackageProjectUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco.git</RepositoryUrl>
+    <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Azure.Data.Tables.Poco</RootNamespace>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Azure.Data.Tables.Poco.Abstractions\Azure.Data.Tables.Poco.Abstractions.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Azure.Data.Tables.Poco.Abstractions\Azure.Data.Tables.Poco.Abstractions.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="README.md" Pack="true" PackagePath="\" />
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>

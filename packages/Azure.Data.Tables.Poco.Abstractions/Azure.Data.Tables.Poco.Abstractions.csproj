@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <PackageId>DavidVollmers.Azure.Data.Tables.Poco.Abstractions</PackageId>
-        <Authors>david@vollmers.org</Authors>
-        <Copyright>David Vollmers</Copyright>
-        <Description>Abstractions for Azure.Data.Tables.Poco</Description>
-        <PackageProjectUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco</PackageProjectUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco.git</RepositoryUrl>
-        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>DavidVollmers.Azure.Data.Tables.Poco.Abstractions</PackageId>
+    <Authors>david@vollmers.org</Authors>
+    <Copyright>David Vollmers</Copyright>
+    <Description>Abstractions for Azure.Data.Tables.Poco</Description>
+    <PackageProjectUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DavidVollmers/Azure.Data.Tables.Poco.git</RepositoryUrl>
+    <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <None Include="README.md" Pack="true" PackagePath="\" />
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>
