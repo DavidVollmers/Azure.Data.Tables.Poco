@@ -5,7 +5,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Poco;
 
-public class TypedTableClient<T> where T : class
+public class TypedTableClient<T> : ITypedTableClient<T> where T : class
 {
     private readonly TableServiceClient _tableServiceClient;
     private readonly TableClient _tableClient;
@@ -91,7 +91,7 @@ public class TypedTableClient<T> where T : class
             .GetEntityIfExistsAsync<TableEntity>(partitionKey, rowKey, select, cancellationToken)
             .ConfigureAwait(false);
 
-        return !response.HasValue ? null : _tableEntityConverter.ConvertFromEntity(response.Value);
+        return !response.HasValue ? null : _tableEntityConverter.ConvertFromEntity(response.Value!);
     }
 
     public AsyncPageable<T> QueryAsync(string? filter = null, int? maxPerPage = null,
