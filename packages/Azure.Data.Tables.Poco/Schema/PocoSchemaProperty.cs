@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Azure.Data.Tables.Poco.Schema;
 
-internal class PocoSchemaProperty
+public sealed class PocoSchemaProperty
 {
     // https://learn.microsoft.com/en-us/rest/api/storageservices/Understanding-the-Table-Service-Data-Model#characters-disallowed-in-key-fields
     private static readonly byte[] DisallowedKeyValueCharacters =

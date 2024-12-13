@@ -2,7 +2,7 @@
 
 namespace Azure.Data.Tables.Poco.Schema;
 
-internal class PocoSchemaConstructor
+public sealed class PocoSchemaConstructor
 {
     private readonly ConstructorInfo _constructorInfo;
     private readonly ParameterInfo[] _parameterInfo;
@@ -18,7 +18,7 @@ internal class PocoSchemaConstructor
         var parameters = new List<object?>();
         foreach (var parameterInfo in _parameterInfo)
         {
-            if (!properties.ContainsKey(parameterInfo.Name!))
+            if (!properties.TryGetValue(parameterInfo.Name!, out var value))
             {
                 var defaultValue = parameterInfo.ParameterType.IsValueType
                     ? Activator.CreateInstance(parameterInfo.ParameterType)
@@ -27,7 +27,7 @@ internal class PocoSchemaConstructor
             }
             else
             {
-                parameters.Add(properties[parameterInfo.Name!]);
+                parameters.Add(value);
             }
         }
 
@@ -49,6 +49,7 @@ internal class PocoSchemaConstructor
             throw new InvalidOperationException(
                 $"No valid POCO constructor found on type '{type.FullName}'. Please use the PocoConstructorAttribute or define a parameterless constructor.");
 
+        // ReSharper disable once InvertIf
         if (constructor.p.Length > 0)
         {
             foreach (var parameterInfo in constructor.p)

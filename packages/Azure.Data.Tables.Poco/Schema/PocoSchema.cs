@@ -2,7 +2,7 @@
 
 namespace Azure.Data.Tables.Poco.Schema;
 
-internal class PocoSchema
+public sealed class PocoSchema
 {
     public PocoSchemaProperty PartitionKey { get; }
 
@@ -30,16 +30,24 @@ internal class PocoSchema
             .Select(PocoSchemaProperty.CreateFromPropertyInfo).ToArray();
 
         var partitionKeys = properties.Where(p => p.IsPartitionKey).ToArray();
-        if (partitionKeys.Length == 0)
-            throw new InvalidOperationException(
-                "No partition key specified. Please use the PartitionKeyAttribute.");
-        if (partitionKeys.Length > 1) throw new InvalidOperationException("More than one partition key specified.");
+        switch (partitionKeys.Length)
+        {
+            case 0:
+                throw new InvalidOperationException(
+                    "No partition key specified. Please use the PartitionKeyAttribute.");
+            case > 1:
+                throw new InvalidOperationException("More than one partition key specified.");
+        }
 
         var rowKeys = properties.Where(p => p.IsRowKey).ToArray();
-        if (rowKeys.Length == 0)
-            throw new InvalidOperationException(
-                "No row key specified. Please use the RowKeyAttribute.");
-        if (rowKeys.Length > 1) throw new InvalidOperationException("More than one row key specified.");
+        switch (rowKeys.Length)
+        {
+            case 0:
+                throw new InvalidOperationException(
+                    "No row key specified. Please use the RowKeyAttribute.");
+            case > 1:
+                throw new InvalidOperationException("More than one row key specified.");
+        }
 
         var getProperties = new List<PocoSchemaProperty>();
         var setProperties = new List<PocoSchemaProperty>();

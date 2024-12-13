@@ -2,7 +2,7 @@
 
 namespace Azure.Data.Tables.Poco;
 
-internal class TableEntityConverter<T> where T : class
+internal sealed class TableEntityConverter<T> where T : class
 {
     private readonly PocoSchema _schema = PocoSchema.CreateFromType(typeof(T));
 

@@ -1,6 +1,6 @@
 ﻿namespace Azure.Data.Tables.Poco;
 
-internal class TypedAsyncPageable<T> : AsyncPageable<T> where T : class
+internal sealed class TypedAsyncPageable<T> : AsyncPageable<T> where T : class
 {
     private readonly AsyncPageable<TableEntity> _pageable;
     private readonly TableEntityConverter<T> _tableEntityConverter;
