@@ -49,7 +49,7 @@ internal class PocoSchemaProperty
 
         if (_propertyInfo.PropertyType.IsEnum && value != null)
         {
-            value = Convert.ChangeType(value, TypeCode.Int32);
+            value = (int)value;
         }
 
         if (!IsPartitionKey && !IsRowKey) return value;
@@ -95,7 +95,7 @@ internal class PocoSchemaProperty
 
         if (isPartitionKey) name = nameof(ITableEntity.PartitionKey);
         else if (isRowKey) name = nameof(ITableEntity.RowKey);
-        
+
         var storeAsAttribute = propertyInfo.GetCustomAttribute<StoreAsAttribute>(true);
         if (storeAsAttribute != null && !storeAsAttribute.Converter.CanConvert(propertyInfo))
         {
@@ -109,8 +109,9 @@ internal class PocoSchemaProperty
             throw new InvalidOperationException(
                 $"Property '{propertyInfo.Name}' of type '{propertyInfo.DeclaringType!.FullName}' cannot be used as a partition or row key. Either define the property as type '{typeof(string).FullName}' or use a key compliant StoreAsAttribute.");
         }
-        
-        var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null || isPartitionKey || isRowKey;
+
+        var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null ||
+                              isPartitionKey || isRowKey;
 
         return new PocoSchemaProperty(name, propertyInfo, storeAsAttribute, isPartitionKey, isRowKey, shouldBeIgnored);
     }
