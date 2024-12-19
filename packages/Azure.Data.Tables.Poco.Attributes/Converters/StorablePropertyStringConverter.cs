@@ -10,10 +10,10 @@ internal class StorablePropertyStringConverter : IStorablePropertyConverter
 
     public bool IsKeyCompliant => true;
 
-    //TODO support more types
     public bool CanConvert(PropertyInfo propertyInfo)
     {
         return propertyInfo.PropertyType.IsAssignableTo(typeof(IConvertible)) ||
+               propertyInfo.PropertyType == typeof(CultureInfo) ||
                propertyInfo.PropertyType == typeof(Guid?) ||
                propertyInfo.PropertyType == typeof(Guid) ||
                propertyInfo.PropertyType == typeof(Uri);
@@ -73,6 +73,7 @@ internal class StorablePropertyStringConverter : IStorablePropertyConverter
         if (propertyInfo.PropertyType == typeof(Guid?) || propertyInfo.PropertyType == typeof(Guid))
             return Guid.Parse(stringValue);
         if (propertyInfo.PropertyType == typeof(Uri)) return new Uri(stringValue, UriKind.RelativeOrAbsolute);
+        if (propertyInfo.PropertyType == typeof(CultureInfo)) return CultureInfo.GetCultureInfo(stringValue);
 
         return stringValue;
     }

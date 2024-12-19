@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace Azure.Data.Tables.Poco.Tests.Pocos;
 
@@ -29,8 +30,10 @@ public class AccountPoco
     public DateTimeOffset? LastLoginAt { get; set; }
 
     public bool IsInternal => MailAddress.EndsWith("@vollmers.org");
-    
+
     [StoreAsString] public Uri? AvatarUrl { get; set; }
 
     [StoreAsString] public Guid? UpdatedBy { get; init; }
+
+    [StoreAsString] public CultureInfo Culture { get; set; } = new("en");
 }
