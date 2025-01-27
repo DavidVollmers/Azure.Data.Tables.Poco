@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Azure.Data.Tables.Poco.Schema;
 
@@ -111,6 +112,7 @@ public sealed class PocoSchemaProperty
         }
 
         var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null ||
+                              propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>(true) != null ||
                               isPartitionKey || isRowKey;
 
         return new PocoSchemaProperty(name, propertyInfo, storeAsAttribute, isPartitionKey, isRowKey, shouldBeIgnored);
