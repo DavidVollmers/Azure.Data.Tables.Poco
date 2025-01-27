@@ -164,7 +164,8 @@ public class IntegrationTests
         {
             Key = Guid.NewGuid().ToString(),
             Json1 = json, 
-            Json2 = json
+            Json2 = json,
+            IgnoredProperty = "test"
         };
         
         var client = new TableServiceClient("UseDevelopmentStorage=true");
@@ -183,14 +184,13 @@ public class IntegrationTests
         
         var filter = $"PartitionKey eq '{jsonPoco.Key}'";
         var results = await tableClient.QueryAsync(filter).ToArrayAsync();
-        Assert.Collection(results,
-            result =>
-            {
-                Assert.NotNull(result);
-                Assert.Equal(json.StringProperty, result!.Json1.StringProperty);
-                Assert.Equal(nameof(JsonPoco.CustomJsonConverter), result.Json2.StringProperty);
-            });
-
+        
+        var result = Assert.Single(results);
+        Assert.NotNull(result);
+        Assert.Equal(jsonPoco.IgnoredProperty, result.IgnoredProperty);
+        Assert.Equal(json.StringProperty, result!.Json1.StringProperty);
+        Assert.Equal(nameof(JsonPoco.CustomJsonConverter), result.Json2.StringProperty);
+        
         await tableClient.DeleteTableAsync();
     }
 }

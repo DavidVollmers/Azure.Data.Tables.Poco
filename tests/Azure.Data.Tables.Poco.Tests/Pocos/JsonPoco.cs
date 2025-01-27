@@ -12,6 +12,8 @@ public class JsonPoco
     [StoreAsJson]
     [JsonConverter(typeof(CustomJsonConverter))]
     public Json Json2 { get; set; } = null!;
+    
+    [JsonIgnore] public string IgnoredProperty { get; set; } = null!;
 
     public class Json
     {

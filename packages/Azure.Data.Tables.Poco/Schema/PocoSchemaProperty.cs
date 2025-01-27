@@ -112,7 +112,6 @@ public sealed class PocoSchemaProperty
         }
 
         var shouldBeIgnored = propertyInfo.GetCustomAttribute<IgnoreDataMemberAttribute>(true) != null ||
-                              propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>(true) != null ||
                               isPartitionKey || isRowKey;
 
         return new PocoSchemaProperty(name, propertyInfo, storeAsAttribute, isPartitionKey, isRowKey, shouldBeIgnored);
