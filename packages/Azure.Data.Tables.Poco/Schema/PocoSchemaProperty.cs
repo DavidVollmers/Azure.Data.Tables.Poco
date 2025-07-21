@@ -77,6 +77,12 @@ public sealed class PocoSchemaProperty
             propertyValue = Enum.ToObject(_propertyInfo.PropertyType, (int)propertyValue);
         }
 
+        var targetType = Nullable.GetUnderlyingType(_propertyInfo.PropertyType) ?? _propertyInfo.PropertyType;
+        if (propertyValue != null && !targetType.IsInstanceOfType(propertyValue))
+        {
+            propertyValue = Convert.ChangeType(propertyValue, targetType);
+        }
+
         _propertyInfo.SetValue(instance, propertyValue);
     }
 

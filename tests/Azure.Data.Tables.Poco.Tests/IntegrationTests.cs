@@ -14,7 +14,9 @@ public class IntegrationTests
             State = AccountState.Active,
             PasswordHash = Guid.NewGuid().ToString(),
             MailAddress = "david@vollmers.org",
-            AvatarUrl = new Uri("https://ui-avatars.com/api/?name=David+Vollmers")
+            AvatarUrl = new Uri("https://ui-avatars.com/api/?name=David+Vollmers"),
+            Balance = 420.69m,
+            WithdrawalLimit = 5000
         };
 
         var client = new TableServiceClient("UseDevelopmentStorage=true");
@@ -41,7 +43,9 @@ public class IntegrationTests
         Assert.Null(getPoco.LastLoginAt);
         Assert.True(getPoco.UpdatedAt > getPoco.CreatedAt);
         Assert.True(getPoco.IsInternal);
-        Assert.Equal(accountPoco.AvatarUrl.ToString(), getPoco.AvatarUrl.ToString());
+        Assert.Equal(accountPoco.AvatarUrl.ToString(), getPoco.AvatarUrl!.ToString());
+        Assert.Equal(accountPoco.Balance, getPoco.Balance);
+        Assert.Equal(accountPoco.WithdrawalLimit, getPoco.WithdrawalLimit);
 
         await tableClient.DeleteTableAsync();
     }
@@ -120,11 +124,7 @@ public class IntegrationTests
     [Fact]
     public async Task Test_TypeInfoPoco()
     {
-        var typeInfoPoco = new TypeInfoPoco
-        {
-            Instance = Guid.NewGuid().ToString(),
-            Type = typeof(string)
-        };
+        var typeInfoPoco = new TypeInfoPoco { Instance = Guid.NewGuid().ToString(), Type = typeof(string) };
 
         var client = new TableServiceClient("UseDevelopmentStorage=true");
 
@@ -156,41 +156,35 @@ public class IntegrationTests
     [Fact]
     public async Task Test_JsonPoco()
     {
-        var json = new JsonPoco.Json
-        {
-            StringProperty = "Lorem Ipsum dolor sit amet."
-        };
+        var json = new JsonPoco.Json { StringProperty = "Lorem Ipsum dolor sit amet." };
         var jsonPoco = new JsonPoco
         {
-            Key = Guid.NewGuid().ToString(),
-            Json1 = json, 
-            Json2 = json,
-            IgnoredProperty = "test"
+            Key = Guid.NewGuid().ToString(), Json1 = json, Json2 = json, IgnoredProperty = "test"
         };
-        
+
         var client = new TableServiceClient("UseDevelopmentStorage=true");
-        
+
         var tableClient = client.GetTableClient<JsonPoco>();
         Assert.Equal(nameof(JsonPoco), tableClient.Name);
-        
+
         // make sure no data exists
         await tableClient.DeleteTableAsync();
-        
+
         await tableClient.CreateTableIfNotExistsAsync();
-        
+
         var response = await tableClient.AddAsync(jsonPoco);
         Assert.NotNull(response);
         Assert.Equal(204, response.Status);
-        
+
         var filter = $"PartitionKey eq '{jsonPoco.Key}'";
         var results = await tableClient.QueryAsync(filter).ToArrayAsync();
-        
+
         var result = Assert.Single(results);
         Assert.NotNull(result);
         Assert.Equal(jsonPoco.IgnoredProperty, result.IgnoredProperty);
         Assert.Equal(json.StringProperty, result!.Json1.StringProperty);
         Assert.Equal(nameof(JsonPoco.CustomJsonConverter), result.Json2.StringProperty);
-        
+
         await tableClient.DeleteTableAsync();
     }
 }
