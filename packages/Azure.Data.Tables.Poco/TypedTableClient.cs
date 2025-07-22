@@ -112,7 +112,7 @@ public class TypedTableClient<T> : ITypedTableClient<T> where T : class
 
     public ITypedTableTransaction<T> CreateTransaction()
     {
-        return new TypedTableTransaction<T>(_tableClient, _tableEntityConverter);
+        return TypedTableTransaction.For(this);
     }
 
     public async Task<Response> UpdateAsync(T poco, ETag ifMatch = default,
