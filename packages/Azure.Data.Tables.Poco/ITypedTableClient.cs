@@ -1,4 +1,5 @@
 ﻿using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Poco.Transactions;
 
 namespace Azure.Data.Tables.Poco;
 
@@ -25,8 +26,10 @@ public interface ITypedTableClient<T> where T : class
     AsyncPageable<T> QueryAsync(string? filter = null, int? maxPerPage = null,
         IEnumerable<string>? select = null, CancellationToken cancellationToken = default);
 
-    TypedTableClient<T> OverrideTableName(string name);
+    ITypedTableClient<T> OverrideTableName(string name);
 
+    ITypedTableTransaction<T> CreateTransaction();
+    
     Task<Response> UpdateAsync(T poco, ETag ifMatch = default,
         TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default);
 
