@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Poco.Transactions;
 
 namespace Azure.Data.Tables.Poco;
 
@@ -102,14 +103,17 @@ public class TypedTableClient<T> : ITypedTableClient<T> where T : class
         return new TypedAsyncPageable<T>(asyncPageable, _tableEntityConverter);
     }
 
-    public TypedTableClient<T> OverrideTableName(string name)
+    public ITypedTableClient<T> OverrideTableName(string name)
     {
         if (name == null) throw new ArgumentNullException(nameof(name));
 
         return new TypedTableClient<T>(_tableServiceClient, _tableEntityConverter, name);
     }
 
-    //TODO transactions
+    public ITypedTableTransaction<T> CreateTransaction()
+    {
+        return new TypedTableTransaction<T>(_tableClient, _tableEntityConverter);
+    }
 
     public async Task<Response> UpdateAsync(T poco, ETag ifMatch = default,
         TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
