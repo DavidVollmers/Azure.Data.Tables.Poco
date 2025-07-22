@@ -48,7 +48,7 @@ public class TransactionTests
         transaction2.Add(accountPoco2);
 
         var exception = await Assert.ThrowsAsync<TableTransactionFailedException>(() => transaction2.SubmitAsync());
-        Assert.Equal(exception.FailedTransactionActionIndex, 1);
+        Assert.Equal(1, exception.FailedTransactionActionIndex);
 
         var getPoco1 = await tableClient.GetIfExistsAsync(accountPoco1.Id.ToString(), accountPoco1.Id.ToString());
 
@@ -93,7 +93,7 @@ public class TransactionTests
         transaction2.Add(typeInfoPoco);
 
         var exception = await Assert.ThrowsAsync<TableTransactionFailedException>(() => transaction2.SubmitAsync());
-        Assert.Equal(exception.FailedTransactionActionIndex, 1);
+        Assert.Equal(1, exception.FailedTransactionActionIndex);
 
         var getPoco1 = await tableClient1.GetIfExistsAsync(accountPoco.Id.ToString(), accountPoco.Id.ToString());
 
