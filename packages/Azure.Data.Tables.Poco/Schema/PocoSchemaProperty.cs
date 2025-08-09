@@ -80,7 +80,10 @@ public sealed class PocoSchemaProperty
         var targetType = Nullable.GetUnderlyingType(_propertyInfo.PropertyType) ?? _propertyInfo.PropertyType;
         if (propertyValue != null && !targetType.IsInstanceOfType(propertyValue))
         {
-            propertyValue = Convert.ChangeType(propertyValue, targetType);
+            // https://github.com/DavidVollmers/Azure.Data.Tables.Poco/issues/3
+            if (targetType == typeof(DateTime) && propertyValue is DateTimeOffset dateTimeOffset)
+                propertyValue = dateTimeOffset.UtcDateTime;
+            else propertyValue = Convert.ChangeType(propertyValue, targetType);
         }
 
         _propertyInfo.SetValue(instance, propertyValue);

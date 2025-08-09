@@ -1,10 +1,30 @@
-﻿using System.Net.Mail;
+﻿using System.Globalization;
+using System.Net.Mail;
 using Azure.Data.Tables.Poco.Tests.Pocos;
 
 namespace Azure.Data.Tables.Poco.Tests;
 
 public class IntegrationTests
 {
+    [Fact]
+    public async Task Test_StoreDateTime()
+    {
+        var poco = new DateTimePoco { JustADateTime = DateTime.UtcNow };
+
+        var client = new TableServiceClient("UseDevelopmentStorage=true");
+
+        var tableClient = client.GetTableClient<DateTimePoco>();
+
+        await tableClient.CreateTableIfNotExistsAsync();
+
+        await tableClient.AddAsync(poco);
+
+        var getPoco = await tableClient.GetIfExistsAsync(poco.Id.ToString(), poco.Id.ToString());
+        Assert.NotNull(getPoco);
+        Assert.Equal(poco.Id, getPoco.Id);
+        Assert.Equal(poco.JustADateTime, getPoco.JustADateTime);
+    }
+
     [Fact]
     public async Task Test_PocoRoundtrip()
     {
@@ -61,7 +81,7 @@ public class IntegrationTests
                 Id = Guid.NewGuid(),
                 State = i == 5 ? AccountState.Locked : AccountState.Active,
                 MailAddress = $"user{i}@example.com",
-                CreatedAt = DateTimeOffset.UtcNow.AddDays(-i)
+                CreatedAt = DateTime.UtcNow.AddDays(-i)
             });
         }
 
